@@ -1,0 +1,22 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "develop", "feature" ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project repository
+      uses: actions/checkout@v4
+    - name: Setup .NET Configuration
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore project dependencies
+      run: dotnet restore
+    - name: Build project
+      run: dotnet build --no-restore
+    - name: Test project
+      run: dotnet test --no-build --verbosity normal
